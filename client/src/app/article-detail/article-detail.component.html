@@ -1,7 +1,8 @@
 <div *ngIf="article">
     <h2>{{article.title}}</h2>
+    <p>{{article.body}}</p>
+    {{article.date}}
 </div>
-{{article.summary}}
 <a class="nav-link" routerLink="/articles/{{article._id}}/edit">Edit Article</a>
 <a class="nav-link" routerLink="/articles">
   <button type="button" class="btn btn-secondary backButton">All Articles</button>

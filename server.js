@@ -1,57 +1,46 @@
 const express = require('express');
 const bodyParser = require ('body-parser');
-const app = express();
+const mongoose = require('mongoose');
 
+const app = express();
 app.use(bodyParser.json());
 
 app.listen(8000);
 
 console.log('Blog Server Listing!');
 
+mongoose.connect('mongodb://blogger:linda1@ds241570.mlab.com:41570/linda-blog', {useNewUrlParser: true});
 
-const articles = [{
-  _id: 1,
-  date: new Date(),
-  title: 'My first post!',			// title shows up on the ArticleList
-  body: 'Lorem ipsum.'				// body is only for the ArticleDetail
-},{
-  _id: 2,
-  date: new Date(),
-  title: 'My second post!',
-  body: 'Lorem ipsum, lorem ipsum.'
-},{
-  _id: 3,
-  date: new Date(),
-  title: 'More of my ramblings',
-  body: 'Lorem ipsum.  Lorem ipsum, lorem ipsum.'
-},{
-  _id: 4,
-  date: new Date(),
-  title: 'A Lot More of my ramblings',
-  body: 'Lorem ipsum.  Lorem ipsum, lorem ipsum.'
-}];
-
+const Article = mongoose.model('Article', {
+  date: Date,
+  title: String,
+  body: String
+})
 
 function getArticles () {
-	return Promise.resolve(articles);
+  return Article.find().exec();
+	// return Promise.resolve(articles);
 }
 
 function getArticle(id) {
-  var article = articles.find(a => a._id==id);
-	return Promise.resolve(article);
+  return Article.findById(id).exec();
+  // var article = articles.find(a => a._id==id);
+	// return Promise.resolve(article);
 }
 
 function saveArticle(article) {
-  var foundArticle = articles.find(a => a._id==article._id);
-  if(foundArticle) {
-      foundArticle.title = article.title;
-      foundArticle.body = article.body;
-      foundArticle.date = article.date;
-  } else {
-    article._id=articles.length+1;
-    articles.push(article);
-  }
-  return Promise.resolve(article);
+  if(!article._id) article = new Article(article);
+  return Article.findByIdAndUpdate(article._id, article, {upsert:true, new:true}).exec();
+  // var foundArticle = articles.find(a => a._id==article._id);
+  // if(foundArticle) {
+      // foundArticle.title = article.title;
+      // foundArticle.body = article.body;
+      // foundArticle.date = article.date;
+  // } else {
+    // article._id=articles.length+1;
+    // articles.push(article);
+  // }
+  // return Promise.resolve(article);
 };
 
 app.get('/api/articles', (req,res) => {

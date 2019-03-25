@@ -8,6 +8,7 @@
     <tbody>
       <tr *ngFor="let article of articles" routerLink="/articles/{{article._id}}">
         <td>{{article.title}}</td>
+        <td class="text-right">{{article.date | date:'mediumDate'}}</td>
       </tr>
     </tbody>    
   </table>
