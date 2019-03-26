@@ -1,0 +1,10 @@
+.lindaPic {
+	border-radius:50%;
+	max-height:260px;
+}
+@media (max-width: 400px) { 
+	.lindaPic{
+		max-height:100px;
+		max-width:100px;
+	}
+}

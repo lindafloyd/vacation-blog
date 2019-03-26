@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { promise } from 'protractor';
-
 
 @Injectable({
   providedIn: 'root'
@@ -22,4 +20,5 @@ export class ArticleService {
   saveArticle(article) { 
     return this.http.post('/api/article/',article).toPromise();
   };
+
 }    

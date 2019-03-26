@@ -1,9 +1,17 @@
-<div *ngIf="article">
-    <h2>{{article.title}}</h2>
-    <p>{{article.body}}</p>
-    {{article.date}}
-</div>
-<a class="nav-link" routerLink="/articles/{{article._id}}/edit">Edit Article</a>
-<a class="nav-link" routerLink="/articles">
-  <button type="button" class="btn btn-secondary backButton">All Articles</button>
-</a>
+<div class="container">
+  <div *ngIf="article">
+    <div class="row mt-5">
+      <div class="col-9">
+        <h2>{{article.title}}</h2>
+          <p>{{article.body}}</p>
+      </div>
+      <div class="col-3">
+        {{article.date | date:longDate}}
+        <a class="nav-link" routerLink="/articles/{{article._id}}/edit">Edit Article</a>
+      </div>
+    </div> 
+  </div>
+  <a class="nav-link" routerLink="/articles">
+    <button type="button" class="btn btn-secondary backButton">All Articles</button>
+  </a>
+</div>  

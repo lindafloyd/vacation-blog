@@ -1,21 +1,20 @@
-<form #form="ngForm" name="newBlog" class="form-inline">
-  <div class="col-md-12 form-group form-inline">
-    <label class="col-sm-2 col-form-label"  for="title">Title</label>
-    <input type="text" name="title" [(ngModel)]="article.title" class="form-control" required>
+<div class="container">
+<form #form="ngForm" name="newBlog" class="mt-5">
+  <div class="row">
+    <div class="col-md-8 form-group">
+      <label class="form-label"  for="title">Title</label>
+      <input type="text" name="title" [(ngModel)]="article.title" class="form-control">
+    </div>
+    <div class="col-md-4 form-group">
+      <label class="form-label"  for="date">Date</label>
+      <input type="date" name="date" [value]="article.date | date:'yyyy-MM-dd'" (input)="article.date=parseDate($event.target.value)" class="form-control" ><br>
+    </div>
+  </div>  
+  <div class="row">
+    <textarea name="body" [(ngModel)]="article.body" class="form-control col-md-12" rows="10"></textarea>
   </div>
-  <div class="col-md-12 form-group form-inline">
-    <label class="col-sm-2 col-form-label"  for="date">Date</label>
-    <input type="text" name="date" [value]="article.date | date:'yyyy-MM-dd'" class="form-control" (input)="article.date=parseDate($event.target.value)"><br>
-    {{article.date}}
-
-
-  </div>
-  <div class="col-md-12 form-group form-inline">
-    <label class="col-sm-2 col-form-label"  for="article">Article</label>
-    <input type="textarea" name="body" [(ngModel)]="article.body" class="form-control" required>
-  </div>
-  <div>  
-    <button (click)="save()" class="btn btn-info" [disabled]=!newBlog.valid>Save Article</button>
+  <div class="text-center mt-5">   
+    <button (click)="save()" class="btn btn-info">Save Article</button>
   </div>  
 </form>
-
+</div>

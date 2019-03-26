@@ -5,9 +5,12 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
 
-app.listen(8000);
+const port = +process.env.PORT || 8000; 
 
-console.log('Blog Server Listing!');
+app.listen(port);
+
+console.log('Blog Server Listing! on port', port);
+app.use('/', express.static('./client/dist/articles'));
 
 mongoose.connect('mongodb://blogger:linda1@ds241570.mlab.com:41570/linda-blog', {useNewUrlParser: true});
 
@@ -18,29 +21,16 @@ const Article = mongoose.model('Article', {
 })
 
 function getArticles () {
-  return Article.find().exec();
-	// return Promise.resolve(articles);
+  return Article.find().sort( {date: -1} ).exec();
 }
 
 function getArticle(id) {
   return Article.findById(id).exec();
-  // var article = articles.find(a => a._id==id);
-	// return Promise.resolve(article);
 }
 
 function saveArticle(article) {
   if(!article._id) article = new Article(article);
   return Article.findByIdAndUpdate(article._id, article, {upsert:true, new:true}).exec();
-  // var foundArticle = articles.find(a => a._id==article._id);
-  // if(foundArticle) {
-      // foundArticle.title = article.title;
-      // foundArticle.body = article.body;
-      // foundArticle.date = article.date;
-  // } else {
-    // article._id=articles.length+1;
-    // articles.push(article);
-  // }
-  // return Promise.resolve(article);
 };
 
 app.get('/api/articles', (req,res) => {

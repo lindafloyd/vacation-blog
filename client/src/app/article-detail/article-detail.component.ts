@@ -11,21 +11,13 @@ import {ArticleService} from '../article.service';
 
 export class ArticleDetailComponent{
 
-article = {};
+article:any;
 
-  // constructor(private route: ActivatedRoute, private articleService:ArticleService) { 
-  //   var id = route.snapshot.paramMap.get('id');
-  //   console.log('getArticles: %o', id);
-  //   // this.article = articleService.getArticle(id);
-  //   this.articleService.getArticle(id).then((article) => {
-  //          this.article = article;
-  //   });
   constructor(private route: ActivatedRoute, private articleService:ArticleService) { 
     var id = route.snapshot.paramMap.get('id');
     console.log('getArticle: %o', id);
     this.articleService.getArticle(id).then((article) => {
             this.article = article;
     });
-
   }
 }

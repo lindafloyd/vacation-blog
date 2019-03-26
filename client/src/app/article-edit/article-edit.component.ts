@@ -10,7 +10,7 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleEditComponent {
   
-  article = {};
+  article:any;
 
   constructor(private route:ActivatedRoute, private router:Router, private articleService:ArticleService) {
     var id = route.snapshot.paramMap.get('id');
@@ -21,14 +21,13 @@ export class ArticleEditComponent {
         name:'',
         title:'',
         date:'',
-        article:''
+        body:''
       }
     } else {
-    this.articleService.getArticle(id).then(article => {
+      this.articleService.getArticle(id).then(article => {
         this.article = article;
-    });
-  }
-  
+      });
+    }
   }
 
   parseDate(str) {
